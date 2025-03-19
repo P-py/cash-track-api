@@ -5,14 +5,14 @@ services:
     command: 'postgres -c max_connections=1000 -c shared_buffers=128MB -c synchronous_commit=off -c fsync=off -c full_page_writes=off'
     environment:
       POSTGRES_DB: ${POSTGRESQL_DATABASE_NAME}
-      POSTGRES_USER: # DATABASE USERNAME HERE #
-      POSTGRES_PASSWORD: # DATABASE PASSWORD HERE #
+      POSTGRES_USER: ${POSTGRESQL_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_DATABASE_PASSWORD}
     ports:
       - 5438:5432
     volumes:
       - postgres-container-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD", "pg_isready", "--username", "# DATABASE USERNAME HERE #", "--dbname", "# DATABASE NAME HERE #" ]
+      test: [ "CMD", "pg_isready", "--username", "${POSTGRESQL_DATABASE_USERNAME}", "--dbname", "${POSTGRESQL_DATABASE_NAME}" ]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -25,11 +25,9 @@ services:
     depends_on:
       - db
     environment:
-      - POSTGRESQL_DATABASE_URL=jdbc:postgresql://db:5432/ #DATABASE NAME HERE#
-      # SHOULD BE LIKE
-      # jdbc:postgresql://db:5432/cashtrack
-      - POSTGRESQL_DATABASE_USERNAME= # DATABASE USERNAME HERE #
-      - POSTGRESQL_DATABASE_PASSWORD= # DATABASE PASSWORD HERE #
-      - JWT_KEY= # JWT SECRET KEY HERE #
+      - POSTGRESQL_DATABASE_URL=jdbc:postgresql://${POSTGRESQL_DATABASE_HOST}:${POSTGRESQL_DATABASE_PORT}/${POSTGRESQL_DATABASE_NAME}
+      - POSTGRESQL_DATABASE_USERNAME=${POSTGRESQL_DATABASE_USERNAME}
+      - POSTGRESQL_DATABASE_PASSWORD=${POSTGRESQL_DATABASE_PASSWORD}
+      - JWT_KEY=${JWT_KEY}
 volumes:
   postgres-container-data:
