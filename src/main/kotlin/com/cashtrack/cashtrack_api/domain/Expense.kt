@@ -8,12 +8,12 @@ import java.time.LocalDateTime
 data class Expense(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    var expenseLabel: String,
-    var value: Double,
+    var expenseLabel: String = "",
+    var value: Double = 0.0,
     @Enumerated(value = EnumType.STRING)
-    var type: ExpenseType,
+    var type: ExpenseType = ExpenseType.INVESTMENTS,
     val dateCreated: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
-    var userCashtrack: UserCashtrack?,
+    var userCashtrack: UserCashtrack? = null,
     var lastUpdatedAt: LocalDateTime? = null
 )
