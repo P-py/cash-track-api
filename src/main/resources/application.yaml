@@ -9,6 +9,9 @@ spring:
     username: ${POSTGRESQL_DATABASE_USERNAME}
     password: ${POSTGRESQL_DATABASE_PASSWORD}
   jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
