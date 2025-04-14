@@ -2,6 +2,7 @@ package com.cashtrack.cashtrack_api.port.controller
 
 import com.cashtrack.cashtrack_api.application.service.UserService
 import com.cashtrack.cashtrack_api.domain.auth.request.UserRegisterRequest
+import com.cashtrack.cashtrack_api.domain.auth.response.BalanceResponse
 import com.cashtrack.cashtrack_api.domain.auth.response.UserResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.transaction.Transactional
@@ -36,5 +37,12 @@ class UserController(
     ): ResponseEntity<UserResponse> {
         val accountDetails = service.getAccountById(accessToken, null)
         return ResponseEntity.ok(accountDetails)
+    }
+
+    @GetMapping("/balance")
+    fun getBalanceById(
+        @RequestHeader(value = "Authorization") accessToken:String
+    ): ResponseEntity<BalanceResponse> {
+        return service.getBalance(accessToken)
     }
 }
