@@ -1,4 +1,4 @@
-package com.cashtrack.cashtrack_api.domain.dto
+package com.cashtrack.cashtrack_api.domain.dto.response
 
 data class BalanceResponse(
     val totalIncomes:Double,

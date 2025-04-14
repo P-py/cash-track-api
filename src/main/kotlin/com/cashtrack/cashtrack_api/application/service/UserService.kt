@@ -2,9 +2,9 @@ package com.cashtrack.cashtrack_api.application.service
 
 import com.cashtrack.cashtrack_api.application.extension.extractTokenValue
 import com.cashtrack.cashtrack_api.domain.adapter.UserAdapter
-import com.cashtrack.cashtrack_api.domain.auth.request.UserRegisterRequest
-import com.cashtrack.cashtrack_api.domain.auth.response.BalanceResponse
-import com.cashtrack.cashtrack_api.domain.auth.response.UserResponse
+import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
+import com.cashtrack.cashtrack_api.domain.dto.response.BalanceResponse
+import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
 import com.cashtrack.cashtrack_api.domain.error.auth.AccessDeniedException
 import com.cashtrack.cashtrack_api.domain.error.exception.DatabaseRegisterNotFoundException
 import com.cashtrack.cashtrack_api.domain.error.exception.NotFoundException

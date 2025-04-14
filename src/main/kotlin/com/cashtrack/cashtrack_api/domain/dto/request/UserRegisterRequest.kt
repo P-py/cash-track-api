@@ -1,4 +1,4 @@
-package com.cashtrack.cashtrack_api.domain.dto
+package com.cashtrack.cashtrack_api.domain.dto.request
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
