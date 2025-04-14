@@ -43,6 +43,7 @@ class UserController(
     fun getBalanceById(
         @RequestHeader(value = "Authorization") accessToken:String
     ): ResponseEntity<BalanceResponse> {
-        return service.getBalance(accessToken)
+        val userBalance = service.getBalance(accessToken)
+        return ResponseEntity.ok(userBalance)
     }
 }
