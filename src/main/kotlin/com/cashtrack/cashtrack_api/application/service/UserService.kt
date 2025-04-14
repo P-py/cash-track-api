@@ -20,6 +20,8 @@ class UserService(
         if (usersRepository.findByEmail(new.email) == null) {
             usersRepository.save(new)
             return mapper.mapView(new)
-        } else throw UserAlreadyExistsException("An user for this e-mail already exists.")
+        } else throw UserAlreadyExistsException(
+            message = "An user for this e-mail already exists."
+        )
     }
 }
