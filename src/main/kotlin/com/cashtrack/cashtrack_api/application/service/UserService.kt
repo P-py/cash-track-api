@@ -14,10 +14,12 @@ class UserService(
     private val usersRepository: UserRepository,
     private val mapper: UserAdapter,
 ) {
-    @Caching(evict = [CacheEvict("UsersList", allEntries = true), CacheEvict("UserDetails", allEntries = true)])
     fun registerNewUser(newUser: UserRegisterRequest): UserResponse {
         val new = mapper.mapEntry(newUser)
-        if (usersRepository.findByEmail(new.email) == null) {
+
+        val userExists = usersRepository.findByEmail(new.email).isPresent
+
+        if (!userExists) {
             usersRepository.save(new)
             return mapper.mapView(new)
         } else throw UserAlreadyExistsException(

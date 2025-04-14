@@ -14,8 +14,7 @@ class CustomUserDetailsService(
     private val usersRepository:UserRepository,
 ): UserDetailsService {
     override fun loadUserByUsername(username:String): UserDetails =
-        usersRepository.findByEmail(username)?.mapToUserDetails()
-            ?: throw RuntimeException("User not found!")
+        usersRepository.findByEmail(username).get().mapToUserDetails()
 
     private fun ApplicationUser.mapToUserDetails(): UserDetails =
         User.builder()
