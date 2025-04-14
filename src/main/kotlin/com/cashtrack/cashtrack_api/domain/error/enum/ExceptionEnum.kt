@@ -22,5 +22,10 @@ enum class ExceptionEnum(
         code = "UNKNOWN_ERROR",
         message = "Ocorreu um erro desconhecido.",
         httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
+    ),
+    DATABASE_REGISTER_NOT_FOUND(
+        code = "DATABASE_REGISTER_NOT_FOUND",
+        message = "Registro não encontrado no banco",
+        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
     )
 }

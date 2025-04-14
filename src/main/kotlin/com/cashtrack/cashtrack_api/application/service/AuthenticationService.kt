@@ -2,6 +2,7 @@ package com.cashtrack.cashtrack_api.application.service
 
 import com.cashtrack.cashtrack_api.domain.auth.request.AuthenticationRequest
 import com.cashtrack.cashtrack_api.domain.auth.response.AuthenticationResponse
+import com.cashtrack.cashtrack_api.domain.error.exception.DatabaseRegisterNotFoundException
 import com.cashtrack.cashtrack_api.domain.repository.UserRepository
 import com.cashtrack.cashtrack_api.port.config.property.JwtProperties
 import org.springframework.security.authentication.AuthenticationManager
@@ -31,7 +32,13 @@ class AuthenticationService(
         )
         return AuthenticationResponse(
             accessToken = accessToken,
-            userId = usersRepository.findByEmail(user.username).get().id
+            userId = usersRepository.findByEmail(user.username)
+                .orElseThrow {
+                    DatabaseRegisterNotFoundException(
+                        message = "User does not exist for this e-mail."
+                    )
+                }
+                .id
         )
     }
 }
