@@ -1,8 +1,8 @@
 package com.cashtrack.cashtrack_api.domain.adapter
 
 import com.cashtrack.cashtrack_api.domain.UserCashtrack
-import com.cashtrack.cashtrack_api.domain.auth.request.UserRegisterRequest
-import com.cashtrack.cashtrack_api.domain.auth.response.UserResponse
+import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
+import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
 import com.cashtrack.cashtrack_api.domain.enum.Role
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
