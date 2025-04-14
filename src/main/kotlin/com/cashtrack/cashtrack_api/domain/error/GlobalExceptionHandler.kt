@@ -37,11 +37,13 @@ class GlobalExceptionHandler {
             exception,
         )
 
-        val messages = exception.bindingResult.fieldErrors.mapNotNull { it.defaultMessage }
+        val errorMessage = exception.bindingResult.fieldErrors
+            .firstNotNullOfOrNull { it.defaultMessage }
+            ?: ExceptionEnum.BAD_ARGUMENTS.message
 
         return ErrorResponse(
             code = ExceptionEnum.BAD_ARGUMENTS.name,
-            message = messages.first(),
+            message = errorMessage,
             description = null
         )
     }
