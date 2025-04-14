@@ -14,7 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @CrossOrigin
 @RequestMapping("/users")
 @SecurityRequirement(name = "bearerAuth")
-class UserController(private val service: UserService) {
+class UserController(
+    private val service: UserService
+) {
     @PostMapping
     @Transactional
     fun register(
@@ -26,5 +28,13 @@ class UserController(private val service: UserService) {
             .build()
             .toUri()
         return ResponseEntity.created(uri).body(userResponse)
+    }
+
+    @GetMapping("/account")
+    fun getAccountById(
+        @RequestHeader(value = "Authorization") accessToken:String
+    ): ResponseEntity<UserResponse> {
+        val accountDetails = service.getAccountById(accessToken, null)
+        return ResponseEntity.ok(accountDetails)
     }
 }
