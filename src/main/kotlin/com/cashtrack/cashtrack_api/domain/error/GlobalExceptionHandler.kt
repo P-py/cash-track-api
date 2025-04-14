@@ -36,9 +36,13 @@ class GlobalExceptionHandler {
             "Erro ao validar campo(s) da requisicao",
             exception,
         )
+
+        val messages = exception.bindingResult.fieldErrors.mapNotNull { it.defaultMessage }
+
         return ErrorResponse(
-            ExceptionEnum.BAD_ARGUMENTS.name,
-            ExceptionEnum.BAD_ARGUMENTS.message,
+            code = ExceptionEnum.BAD_ARGUMENTS.name,
+            message = messages.first(),
+            description = null
         )
     }
 
