@@ -31,7 +31,7 @@ class AuthenticationService(
         )
         return AuthenticationResponse(
             accessToken = accessToken,
-            userId = usersRepository.findByEmail(user.username)?.id
+            userId = usersRepository.findByEmail(user.username).get().id
         )
     }
 }
