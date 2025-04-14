@@ -72,4 +72,19 @@ class UserService(
             throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
         }
     }
+
+    fun getUserById(accessToken:String, userId:Long?): UserResponse {
+        val tokenValue = accessToken.extractTokenValue()
+        val userEmail = tokenService.extractEmail(tokenValue)
+
+        val id = usersRepository.findByEmail(userEmail)
+            .orElseThrow { DatabaseRegisterNotFoundException(message = "Oh, something went wrong!! User not found!") }
+            .id ?: throw AccessDeniedException(message = "You don't have permission to access this page.")
+
+        try {
+            return mapper.mapView(usersRepository.getReferenceById(userId ?: id))
+        } catch (e:JpaObjectRetrievalFailureException){
+            throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
+        }
+    }
 }
