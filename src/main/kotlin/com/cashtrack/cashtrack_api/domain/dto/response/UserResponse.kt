@@ -1,4 +1,4 @@
-package com.cashtrack.cashtrack_api.domain.auth.response
+package com.cashtrack.cashtrack_api.domain.dto
 
 import java.io.Serializable
 
