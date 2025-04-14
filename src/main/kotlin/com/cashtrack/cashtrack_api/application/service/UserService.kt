@@ -3,8 +3,10 @@ package com.cashtrack.cashtrack_api.application.service
 import com.cashtrack.cashtrack_api.application.extension.extractTokenValue
 import com.cashtrack.cashtrack_api.domain.adapter.UserAdapter
 import com.cashtrack.cashtrack_api.domain.auth.request.UserRegisterRequest
+import com.cashtrack.cashtrack_api.domain.auth.response.BalanceResponse
 import com.cashtrack.cashtrack_api.domain.auth.response.UserResponse
 import com.cashtrack.cashtrack_api.domain.error.auth.AccessDeniedException
+import com.cashtrack.cashtrack_api.domain.error.exception.DatabaseRegisterNotFoundException
 import com.cashtrack.cashtrack_api.domain.error.exception.NotFoundException
 import com.cashtrack.cashtrack_api.domain.error.exception.UserAlreadyExistsException
 import com.cashtrack.cashtrack_api.domain.repository.UserRepository
@@ -32,15 +34,41 @@ class UserService(
     }
 
     fun getAccountById(accessToken: String, userId: Long?): UserResponse {
-        val id = usersRepository.findByEmail(
-            tokenService.extractEmail(accessToken.extractTokenValue())
-        )?.id ?: throw AccessDeniedException(
-            message = "You don't have permission to access this page."
-        )
+        val tokenValue = accessToken.extractTokenValue()
+        val userEmail = tokenService.extractEmail(tokenValue)
+
+        val id = usersRepository.findByEmail(userEmail)
+            .orElseThrow { DatabaseRegisterNotFoundException(message = "Oh, something went wrong!! User not found!") }
+            .id ?: throw AccessDeniedException(message = "You don't have permission to access this page.")
 
         try {
             return mapper.mapView(usersRepository.getReferenceById(userId ?: id))
-        } catch (e: JpaObjectRetrievalFailureException){
+        } catch (ex: JpaObjectRetrievalFailureException){
+            throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
+        }
+    }
+
+    fun getBalance(accessToken: String): BalanceResponse {
+        val tokenValue = accessToken.extractTokenValue()
+        val userEmail = tokenService.extractEmail(tokenValue)
+
+        val userId = usersRepository.findByEmail(userEmail)
+            .orElseThrow { DatabaseRegisterNotFoundException(message = "Oh, something went wrong!! User not found!") }
+            .id ?: throw AccessDeniedException(message = "You don't have permission to access this page.")
+
+        try {
+            val userIncomeList = usersRepository.getReferenceById(userId)
+                .incomeList
+                .sumOf { i -> i.value }
+            val userExpenseList = usersRepository.getReferenceById(userId)
+                .expenseList
+                .sumOf { i -> i.value }
+            return BalanceResponse(
+                totalIncomes = userIncomeList,
+                totalExpenses = userExpenseList,
+                balance = userIncomeList - userExpenseList
+            )
+        } catch (ex:  JpaObjectRetrievalFailureException){
             throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
         }
     }
