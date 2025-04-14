@@ -27,5 +27,15 @@ enum class ExceptionEnum(
         code = "DATABASE_REGISTER_NOT_FOUND",
         message = "Registro não encontrado no banco",
         httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
-    )
+    ),
+    ACCESS_DENINED(
+        code = "ACCESS_DENIED",
+        message = "Você não tem permissão para acessar esse recurso.",
+        httpStatus = HttpStatus.UNAUTHORIZED
+    ),
+    NOT_FOUND(
+        code = "NOT_FOUND",
+        message = "Não foi possível encontrar o registro.",
+        httpStatus = HttpStatus.NOT_FOUND
+    ),
 }
