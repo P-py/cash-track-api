@@ -15,8 +15,8 @@ data class UserRegisterRequest(
     @field:NotBlank(message = "Username must not be blank.")
     @field:Size(min = 3, max = 40, message = "Username size must be between 3 and 40.")
     val username:String,
-    @field:NotEmpty(message = "Password must no be empty.")
-    @field:NotBlank(message = "Password must no be blank.")
+    @field:NotEmpty(message = "Password must not be empty.")
+    @field:NotBlank(message = "Password must not be blank.")
     @field:Size(min = 8, max = 100, message = "Password size must be at least 8 characters long")
     val password:String
 )
