@@ -28,7 +28,7 @@ enum class ExceptionEnum(
         message = "Registro não encontrado no banco",
         httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
     ),
-    ACCESS_DENINED(
+    ACCESS_DENIED(
         code = "ACCESS_DENIED",
         message = "Você não tem permissão para acessar esse recurso.",
         httpStatus = HttpStatus.UNAUTHORIZED
