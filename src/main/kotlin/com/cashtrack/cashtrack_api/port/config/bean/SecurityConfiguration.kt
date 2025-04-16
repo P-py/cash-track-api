@@ -87,7 +87,7 @@ class SecurityConfiguration(
 
         val configuration = CorsConfiguration()
         configuration.addAllowedHeader("*")
-        configuration.addExposedHeader("Cookie")
+        configuration.addExposedHeader("Authorization")
         configuration.allowedOriginPatterns = allowedOrigins
         configuration.allowedMethods = allowedMethods
         configuration.allowCredentials = true

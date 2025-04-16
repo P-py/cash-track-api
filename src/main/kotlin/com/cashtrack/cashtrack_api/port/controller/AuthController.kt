@@ -2,7 +2,9 @@ package com.cashtrack.cashtrack_api.port.controller
 
 import com.cashtrack.cashtrack_api.application.service.AuthenticationService
 import com.cashtrack.cashtrack_api.domain.auth.request.AuthenticationRequest
-import com.cashtrack.cashtrack_api.domain.auth.response.AuthenticationResponse
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -12,8 +14,13 @@ class AuthController(
     private val authenticationService:AuthenticationService,
 ){
     @PostMapping
-    fun authenticate(@RequestBody authRequest: AuthenticationRequest): AuthenticationResponse {
+    fun authenticate(
+        @RequestBody authRequest: AuthenticationRequest,
+        response: HttpServletResponse,
+    ): ResponseEntity<Unit> {
         val authResponse = authenticationService.authentication(authRequest)
-        return authResponse
+        response.setHeader(HttpHeaders.AUTHORIZATION, authResponse)
+
+        return ResponseEntity.noContent().build()
     }
 }
