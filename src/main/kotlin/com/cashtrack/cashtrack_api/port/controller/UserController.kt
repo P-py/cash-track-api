@@ -2,6 +2,7 @@ package com.cashtrack.cashtrack_api.port.controller
 
 import com.cashtrack.cashtrack_api.application.service.UserService
 import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
+import com.cashtrack.cashtrack_api.domain.dto.request.UserUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.BalanceResponse
 import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -16,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/users")
 @SecurityRequirement(name = "bearerAuth")
 class UserController(
-    private val service: UserService
+    private val service: UserService,
 ) {
     @PostMapping
     @Transactional
@@ -45,5 +46,24 @@ class UserController(
     ): ResponseEntity<BalanceResponse> {
         val userBalance = service.getBalance(accessToken)
         return ResponseEntity.ok(userBalance)
+    }
+
+    @PutMapping
+    @Transactional
+    fun update(
+        @RequestBody @Valid updatedUser: UserUpdateRequest,
+        @RequestHeader("Authorization") accessToken: String
+    ):ResponseEntity<UserResponse>{
+        val updateView = service.updateUserData(updatedUser, accessToken)
+        return ResponseEntity.ok(updateView)
+    }
+
+    @DeleteMapping("/delete-my-account")
+    @Transactional
+    fun delete(
+        @RequestHeader("Authorization") accessToken: String
+    ): ResponseEntity<Unit>{
+        service.deleteUserAccount(accessToken)
+        return ResponseEntity.noContent().build()
     }
 }
