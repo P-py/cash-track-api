@@ -38,4 +38,14 @@ enum class ExceptionEnum(
         message = "Não foi possível encontrar o registro.",
         httpStatus = HttpStatus.NOT_FOUND
     ),
+    EMAIL_CANNOT_BE_EQUAL(
+        code = "EMAIL_EQUAL_TO_OLD",
+        message = "O novo e-mail não pode ser igual ao atual.",
+        httpStatus = HttpStatus.UNPROCESSABLE_ENTITY
+    ),
+    USERNAME_CANNOT_BE_EQUAL(
+        code = "USERNAME_EQUAL_TO_OLD",
+        message = "O novo nome de usuário não pode ser igual ao atual.",
+        httpStatus = HttpStatus.UNPROCESSABLE_ENTITY
+    )
 }
