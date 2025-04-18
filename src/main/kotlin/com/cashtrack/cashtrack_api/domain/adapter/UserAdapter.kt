@@ -15,7 +15,8 @@ class UserAdapter(
     override fun mapView(c:UserCashtrack): UserResponse {
         return UserResponse(
             id = c.id,
-            username = c.username
+            username = c.username,
+            email = c.email
         )
     }
 
