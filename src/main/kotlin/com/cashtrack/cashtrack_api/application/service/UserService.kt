@@ -119,7 +119,7 @@ class UserService(
 
                     if (userExists) {
                         throw UserAlreadyExistsException(
-                            message = "An user for this e-mail already exists."
+                            message = "A user for this e-mail already exists."
                         )
                     }
                     toUpdate.email = updatedUser.email
