@@ -10,7 +10,7 @@ class IncomeAdapter : Adapter<Income, IncomeResponse, IncomeRegisterRequest> {
     override fun mapView(c:Income): IncomeResponse {
         return IncomeResponse(
             id = c.id,
-            incomeLabel = c.incomeLabel,
+            incomeLabel = c.label,
             value = c.value,
             type = c.type,
             dateCreated = c.dateCreated,
@@ -20,7 +20,7 @@ class IncomeAdapter : Adapter<Income, IncomeResponse, IncomeRegisterRequest> {
 
     override fun mapEntry(e: IncomeRegisterRequest): Income {
         return Income(
-            incomeLabel = e.incomeLabel,
+            label = e.incomeLabel,
             value = e.value,
             type = e.type,
             userCashtrack = null
