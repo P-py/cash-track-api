@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param
 
 interface IncomeRepository: JpaRepository<Income, Long> {
     @Query(
-        value = "SELECT * FROM income WHERE income_label = :label",
+        value = "SELECT * FROM income WHERE label = :label",
         nativeQuery = true
     )
     fun getByLabel(@Param("label") label:String): List<Income>

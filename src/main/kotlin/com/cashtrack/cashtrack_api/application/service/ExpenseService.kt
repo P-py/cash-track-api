@@ -96,7 +96,7 @@ class ExpenseService(
         try {
             val update = expenseRepository.getReferenceById(updatedExpense.id)
             if (update.userCashtrack!!.id == userId) {
-                update.expenseLabel = updatedExpense.expenseLabel
+                update.label = updatedExpense.expenseLabel
                 update.value = updatedExpense.value
                 update.type = updatedExpense.type
                 update.lastUpdatedAt = LocalDateTime.now()

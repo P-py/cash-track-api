@@ -95,7 +95,7 @@ class IncomeService(
         try {
             val update = incomeRepository.getReferenceById(updatedIncome.id)
             if (update.userCashtrack?.id == userId){
-                update.incomeLabel = updatedIncome.incomeLabel
+                update.label = updatedIncome.incomeLabel
                 update.value = updatedIncome.value
                 update.type = updatedIncome.type
                 update.lastUpdatedAt = LocalDateTime.now()

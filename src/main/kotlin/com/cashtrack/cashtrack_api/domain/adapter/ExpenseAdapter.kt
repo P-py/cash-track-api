@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class ExpenseAdapter : Adapter<Expense, ExpenseResponse, ExpenseRegisterRequest> {
     override fun mapEntry(e: ExpenseRegisterRequest):Expense {
         return Expense(
-            expenseLabel = e.expenseLabel,
+            label = e.expenseLabel,
             value = e.value,
             type = e.type,
             userCashtrack = null
@@ -19,7 +19,7 @@ class ExpenseAdapter : Adapter<Expense, ExpenseResponse, ExpenseRegisterRequest>
     override fun mapView(c:Expense): ExpenseResponse {
         return ExpenseResponse(
             id = c.id,
-            expenseLabel = c.expenseLabel,
+            expenseLabel = c.label,
             value = c.value,
             type = c.type,
             dateCreated = c.dateCreated,
