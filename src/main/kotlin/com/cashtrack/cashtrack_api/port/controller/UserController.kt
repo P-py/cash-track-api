@@ -4,6 +4,7 @@ import com.cashtrack.cashtrack_api.application.service.UserService
 import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
 import com.cashtrack.cashtrack_api.domain.dto.request.UserUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.BalanceResponse
+import com.cashtrack.cashtrack_api.domain.dto.response.HistoryResponse
 import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
@@ -43,6 +44,14 @@ class UserController(
         @RequestHeader(value = "Authorization") accessToken:String
     ): ResponseEntity<BalanceResponse> {
         val userBalance = service.getBalance(accessToken)
+        return ResponseEntity.ok(userBalance)
+    }
+
+    @GetMapping("/history")
+    fun getSpendingHistory(
+        @RequestHeader(value = "Authorization") accessToken:String
+    ): ResponseEntity<List<HistoryResponse?>> {
+        val userBalance = service.getSpendingHistory(accessToken)
         return ResponseEntity.ok(userBalance)
     }
 
