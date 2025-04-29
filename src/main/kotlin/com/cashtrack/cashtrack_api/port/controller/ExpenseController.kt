@@ -4,7 +4,6 @@ import com.cashtrack.cashtrack_api.application.service.ExpenseService
 import com.cashtrack.cashtrack_api.domain.dto.request.ExpenseRegisterRequest
 import com.cashtrack.cashtrack_api.domain.dto.request.ExpenseUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.ExpenseResponse
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -13,7 +12,6 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
 @RequestMapping("/expenses")
-@SecurityRequirement(name = "bearerAuth")
 class ExpenseController(
     private val service: ExpenseService,
 ) {

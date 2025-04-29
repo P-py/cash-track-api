@@ -4,7 +4,6 @@ import com.cashtrack.cashtrack_api.application.service.IncomeService
 import com.cashtrack.cashtrack_api.domain.dto.request.IncomeRegisterRequest
 import com.cashtrack.cashtrack_api.domain.dto.request.IncomeUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.IncomeResponse
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder
 @RestController
 @RequestMapping("/incomes")
 @CrossOrigin
-@SecurityRequirement(name = "bearerAuth")
 class IncomeController(
     private val service: IncomeService,
 ) {

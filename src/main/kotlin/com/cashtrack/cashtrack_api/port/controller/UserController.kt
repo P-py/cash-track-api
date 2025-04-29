@@ -5,7 +5,6 @@ import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
 import com.cashtrack.cashtrack_api.domain.dto.request.UserUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.BalanceResponse
 import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -15,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder
 @RestController
 @CrossOrigin
 @RequestMapping("/users")
-@SecurityRequirement(name = "bearerAuth")
 class UserController(
     private val service: UserService,
 ) {
