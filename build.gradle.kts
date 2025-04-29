@@ -37,7 +37,6 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 	implementation("org.springframework.security:spring-security-web:6.3.5")
 	implementation("org.springframework.boot:spring-boot-starter-security:3.4.5")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis:3.4.5")
 	implementation("org.springframework:spring-context:6.1.14")
 
