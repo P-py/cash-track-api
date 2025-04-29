@@ -1,10 +1,13 @@
 package com.cashtrack.cashtrack_api.application.service
 
 import com.cashtrack.cashtrack_api.application.extension.extractTokenValue
+import com.cashtrack.cashtrack_api.domain.Trackable
+import com.cashtrack.cashtrack_api.domain.adapter.HistoryAdapter
 import com.cashtrack.cashtrack_api.domain.adapter.UserAdapter
 import com.cashtrack.cashtrack_api.domain.dto.request.UserRegisterRequest
 import com.cashtrack.cashtrack_api.domain.dto.request.UserUpdateRequest
 import com.cashtrack.cashtrack_api.domain.dto.response.BalanceResponse
+import com.cashtrack.cashtrack_api.domain.dto.response.HistoryResponse
 import com.cashtrack.cashtrack_api.domain.dto.response.UserResponse
 import com.cashtrack.cashtrack_api.domain.error.auth.AccessDeniedException
 import com.cashtrack.cashtrack_api.domain.error.enum.ExceptionEnum
@@ -17,6 +20,7 @@ import io.netty.util.internal.SuppressJava6Requirement
 import org.hibernate.sql.Update
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 @Suppress("SwallowedException")
@@ -24,6 +28,7 @@ class UserService(
     private val usersRepository: UserRepository,
     private val mapper: UserAdapter,
     private val tokenService: TokenService,
+    private val historyMapper: HistoryAdapter,
 ) {
     fun registerNewUser(newUser: UserRegisterRequest): UserResponse {
         val new = mapper.mapEntry(newUser)
@@ -73,6 +78,25 @@ class UserService(
                 totalExpenses = userExpenseList,
                 balance = userIncomeList - userExpenseList
             )
+        } catch (ex:  JpaObjectRetrievalFailureException){
+            throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
+        }
+    }
+
+    fun getSpendingHistory(accessToken: String): List<HistoryResponse?> {
+        val tokenValue = accessToken.extractTokenValue()
+        val userEmail = tokenService.extractEmail(tokenValue)
+
+        val userId = usersRepository.findByEmail(userEmail)
+            .orElseThrow { DatabaseRegisterNotFoundException(message = "Oh, something went wrong!! User not found!") }
+            .id ?: throw AccessDeniedException(message = "You don't have permission to access this page.")
+
+        try {
+            val userHistory = usersRepository.findHistory(userId)
+            val response = userHistory.mapNotNull {
+                historyMapper.mapView(it!!)
+            }
+            return response
         } catch (ex:  JpaObjectRetrievalFailureException){
             throw(NotFoundException(message = "Oh, something went wrong!! User not found!"))
         }
