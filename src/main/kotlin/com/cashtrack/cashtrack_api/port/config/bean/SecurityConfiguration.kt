@@ -96,6 +96,7 @@ class SecurityConfiguration(
                     .requestMatchers(
                         HttpMethod.GET,
                         "/users/account",
+                        "/users/history",
                         "/users/balance",
                         "/incomes/{id}",
                         "/incomes",
