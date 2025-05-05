@@ -1,8 +1,34 @@
 plugins {
 	id("org.springframework.boot") version "3.3.1"
 	id("io.spring.dependency-management") version "1.1.4"
-	kotlin("jvm") version "2.0.0"
+	kotlin("jvm") version "2.0.10"
 	kotlin("plugin.spring") version "2.0.0"
+	id("io.gitlab.arturbosch.detekt") version "1.23.7"
+}
+
+detekt {
+	toolVersion = "1.23.7"
+	autoCorrect = true
+
+	source.setFrom("src/main/java", "src/main/kotlin")
+
+	parallel = true
+
+	config.setFrom("$rootDir/config/detekt/config.yml")
+
+	buildUponDefaultConfig = true
+
+	allRules = false
+
+	baseline = file("$rootDir/config/detekt/baseline.xml")
+
+	disableDefaultRuleSets = false
+
+	debug = true
+
+	ignoreFailures = false
+
+	basePath = projectDir.absolutePath
 }
 
 group = "com.cashtrack"
@@ -38,6 +64,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security:3.4.5")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis:3.4.5")
 	implementation("org.springframework:spring-context:6.1.14")
+
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.5")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.0")
