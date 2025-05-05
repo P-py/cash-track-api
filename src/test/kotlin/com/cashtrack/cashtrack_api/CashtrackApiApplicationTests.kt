@@ -1,4 +1,4 @@
-package com.cashtrack.cashtrack_api
+package com.cashtrack.api
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
