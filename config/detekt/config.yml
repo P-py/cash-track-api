@@ -1,0 +1,31 @@
+build:
+  maxIssues: 0
+style:
+  UnusedParameter:
+    excludes: [ "**/mock/**" ]
+  UtilityClassWithPublicConstructor:
+    excludes: [ "**/template/**" ]
+  MaxLineLength:
+    ignoreAnnotated:
+      - "Test"
+  WildcardImport:
+    active: false
+formatting:
+  TrailingCommaOnCallSite:
+    active: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+  MaximumLineLength:
+    ignoreAnnotated:
+      - "Test"
+  NoWildcardImports:
+    active: false
+complexity:
+  NamedArguments:
+    active: true
+    threshold: 10
+  TooManyFunctions:
+    active: false
+potential-bugs:
+  UnsafeCallOnNullableType:
+    active: false
