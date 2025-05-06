@@ -4,6 +4,21 @@ plugins {
 	kotlin("jvm") version "2.0.10"
 	kotlin("plugin.spring") version "2.0.0"
 	id("io.gitlab.arturbosch.detekt") version "1.23.7"
+	jacoco
+}
+
+jacoco {
+	toolVersion = "0.8.11"
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+
+	reports {
+		xml.required.set(true)
+		html.required.set(true)
+		csv.required.set(false)
+	}
 }
 
 detekt {
@@ -87,4 +102,5 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
 }

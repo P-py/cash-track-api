@@ -1,0 +1,29 @@
+com:
+  cashtrack:
+    cors:
+      allowed-origin-patterns: http://*;https://*
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRESQL_DATABASE_HOST:test}:${POSTGRESQL_DATABASE_PORT:test}/${POSTGRESQL_DATABASE_NAME:test}
+    username: ${POSTGRESQL_DATABASE_USERNAME:test}
+    password: ${POSTGRESQL_DATABASE_PASSWORD:test}
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  flyway:
+    driver-class-name: org.postgresql.Driver
+    locations: db/migration
+    password: ${POSTGRESQL_DATABASE_PASSWORD:test}
+    url: jdbc:postgresql://${POSTGRESQL_DATABASE_HOST:test}:${POSTGRESQL_DATABASE_PORT:test}/${POSTGRESQL_DATABASE_NAME:test}
+    user: ${POSTGRESQL_DATABASE_USERNAME:test}
+jwt:
+  key: ${JWT_KEY:test}
+  access-token-expiration: 3600000 #ms
+  refresh-token-expiration: 86400000 #ms
